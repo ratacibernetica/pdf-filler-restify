@@ -1,0 +1,6 @@
+version: "2"
+services:
+        pdf-filler:
+                image: ratacibernetica/debian-node
+                volumes: 
+                        - "./:/app"
