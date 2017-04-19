@@ -11,6 +11,7 @@
     "mocha": "^3.2.0"
   },
   "scripts": {
+    "start": "node src/loader/pdf-loader.js",
     "test": "mocha"
   },
   "author": "Martin Roldan Araujo",

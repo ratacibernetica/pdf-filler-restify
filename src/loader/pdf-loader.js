@@ -5,28 +5,19 @@ const path = 'resources/pdfs/';
 
 const fillForm = (req, res, next) => {
     const filename = path + 'i-129';
-    const fields = req.body;
-    fieldFiller(fields, filename, (result )=>{
+    const fieldsObj = req.body;
+    fieldFiller(fieldsObj, filename, (result) => {
         res.send(result);
         next();
     });
-    
+
 }
 
-const fieldFiller = (fields, fullPath, callback) => {
-    let firstLoop = true;
-    fields.map(field => {
-        let filledField = {};
-        filledField[field.id] = field.value;
-        let pdf = pdfFillForm.writeSync(fullPath + '.pdf', filledField, { 'save': 'pdf' });
-        if (firstLoop) {
-            fullPath = fullPath + '_filled';
-            firstLoop = false;
-        }
-        fs.writeFileSync(fullPath + '.pdf', pdf);
-        console.info(filledField);
-    });
-    callback(fullPath);
+const fieldFiller = (fieldsObj, fullPath, callback) => {
+    let pdf = pdfFillForm.writeSync(fullPath + '.pdf', fieldsObj, { 'save': 'pdf' });
+    fs.writeFileSync(fullPath + '_filled.pdf', pdf);
+    console.info(fieldsObj);
+    callback(fullPath+"_filled.pdf");
 }
 
 const loadPdf = fullPath => pdfFillForm.readSync(fullPath + '.pdf');
