@@ -23,7 +23,9 @@ $ cd pdf-filler-restify
 $ docker run --rm -it -v "$PWD:/app" -w "/app" -p 8080:8080 ratacibernetica/debian-node npm install && npm start
 ```
 
-Make a GET request to the URL http://localhost:8080/pdf/**THE-FILE-NAME**/fields. For the demo file i-129.pdf the URL is http://localhost:8080/pdf/**i-129**/fields:
+Make a GET request to the URL localhost:8080/pdf/**THE-FILE-NAME**/fields. 
+
+For the demo file i-129.pdf the URL is localhost:8080/pdf/**i-129**/fields:
 
 ![](http://res.cloudinary.com/ratacibernetica/image/upload/v1492568096/Screen_Shot_2017-04-18_at_10.11.52_PM_jbf92f.png)
 
