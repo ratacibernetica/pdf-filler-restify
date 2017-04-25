@@ -8,6 +8,22 @@ PDF Form filler using a web service
 * POST the form fields with the values you need and generate a *filled pdf file*
 * Dynamic pdf loading via route, for example http://localhost/pdf/myPdfFile/fields
 
+## Super quick start, test drive
+
+You can try this application using Docker CE.
+
+Requirements: docker
+
+```
+$ docker run --rm -it -p 8888:8080 ratacibernetica/pdf-filler-restify
+```
+
+### Test it 
+
+On linux/Mac, visit localhost:8888/pdf/i-129/fields
+
+On Windows, open Kitematic, select the running container, click settings tab and lock for the correct ip address and port.
+
 ## Quick start 
 
 Clone this repo:
