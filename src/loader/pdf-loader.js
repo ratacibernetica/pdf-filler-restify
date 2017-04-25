@@ -4,20 +4,24 @@ var fs = require('fs');
 const path = 'resources/pdfs/';
 
 const fillForm = (req, res, next) => {
-    const filename = path + 'i-129';
-    const fieldsObj = req.body;
-    fieldFiller(fieldsObj, filename, (result) => {
+    const params = req.body;
+    const pdfFile = path + params.pdfFile;
+    const filename = path + params.filename;
+    const fieldsObj = params.content;
+    
+    fieldFiller(fieldsObj, pdfFile, filename, (result) => {
         res.send(result);
         next();
     });
 
 }
 
-const fieldFiller = (fieldsObj, fullPath, callback) => {
+const fieldFiller = (fieldsObj, fullPath, filename, callback) => {
     let pdf = pdfFillForm.writeSync(fullPath + '.pdf', fieldsObj, { 'save': 'pdf' });
-    fs.writeFileSync(fullPath + '_filled.pdf', pdf);
+    fs.writeFileSync(filename + '_filled.pdf', pdf);
     console.info(fieldsObj);
-    callback(fullPath+"_filled.pdf");
+    console.info(filename);
+    callback(filename+"_filled.pdf");
 }
 
 const loadPdf = fullPath => pdfFillForm.readSync(fullPath + '.pdf');
@@ -48,7 +52,7 @@ server.use(restify.bodyParser());
 
 server.get('/pdf/:filename/fields', getFields);
 server.get('/pdf/:filename', getFile);
-server.post('/pdf/:filename/fields', fillForm);
+server.post('/pdf/fields', fillForm);
 
 server.listen(8080, function () {
     console.log('%s listening at %s', server.name, server.url);
