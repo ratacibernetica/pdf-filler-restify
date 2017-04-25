@@ -22,6 +22,13 @@ const fieldFiller = (fieldsObj, fullPath, callback) => {
 
 const loadPdf = fullPath => pdfFillForm.readSync(fullPath + '.pdf');
 
+const getFile = ( req, res, next ) => {
+        restify.serveStatic({
+        'directory': '/pdf/',
+        'default': req.params.filename
+    })
+}
+
 const getFields = (req, res, next) => {
     let fields = loadPdf(path + req.params.filename);
     if (!fields) {
@@ -40,7 +47,7 @@ var server = restify.createServer();
 server.use(restify.bodyParser());
 
 server.get('/pdf/:filename/fields', getFields);
-
+server.get('/pdf/:filename', getFile);
 server.post('/pdf/:filename/fields', fillForm);
 
 server.listen(8080, function () {
