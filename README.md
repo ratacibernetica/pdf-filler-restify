@@ -46,7 +46,32 @@ For the demo file i-129.pdf the URL is localhost:8080/pdf/**i-129**/fields:
 ![](http://res.cloudinary.com/ratacibernetica/image/upload/v1492568096/Screen_Shot_2017-04-18_at_10.11.52_PM_jbf92f.png)
 
 POST a JSON object with the desired changes:
-![](http://res.cloudinary.com/ratacibernetica/image/upload/v1492568096/Screen_Shot_2017-04-18_at_10.12.10_PM_jmsokk.png)
+
+Example of object:
+
+```
+{
+	"pdfFile": "i-129",
+	"filename": "myNewFile",
+	"content": {
+		"65537": "Martín",
+		"65538": "Roldán Araujo",
+		"65539": "Across Borders Management Consulting Group",
+		"65540": "Mount Dora",
+		"65541": 32757,
+		"65549": "777777777",
+		"65542": "FL"
+	}
+}
+```
+
+Where:
+
+**pdfFile** the name of the PDF template form that should exist in resources/pdfs
+**filename** the *desired* name for the filled pdf file.
+**content** object with the id of the fields and the value of each one.
+
+![](http://res.cloudinary.com/ratacibernetica/image/upload/v1493087370/Screen_Shot_2017-04-24_at_10.28.31_PM_xgzgut.png)
 
 ## Requirements
 
