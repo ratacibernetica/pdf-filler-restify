@@ -56,27 +56,10 @@ server.get('/pdf/:filename', getFile);
 server.post('/pdf/fields', fillForm);
 server.get( /._filled.pdf/, function(req, res, next) {
 // console.log(req);
-  fs.readFile( process.env.PWD+ '/resources/pdfs' + req.url, 'utf8', function(err, file) {
+  fs.createReadStream( process.env.PWD+ '/resources/pdfs' + req.url).pipe(res);
+ // fs.readFile( process.env.PWD+ '/resources/pdfs' + req.url, 'utf8', function(err, file) {
 // console.log(err);
 // console.log(file);
-    if (err) {
-      res.send(500);
-      return next();
-    }
-    res.writeHead(200, {
-  'Content-Length': Buffer.byteLength(file),
-  'Content-Type': 'application/pdf'
-});
-
-//    res.send({
-//      code: 200,
-//      noEnd: true
-//    });
-
-    res.write(file);
-    res.end();
-    return next();
-  });
 });
 server.listen(8080, function () {
     console.log('%s listening at %s', server.name, server.url);
