@@ -1,7 +1,8 @@
 var restify = require('restify');
 var pdfFillForm = require('pdf-fill-form');
 var fs = require('fs');
-const path = 'resources/pdfs/';
+const path = process.env.PWD + '/resources/pdfs/';
+const serverName = "http://182.72.238.124:8080";
 
 const fillForm = (req, res, next) => {
     const params = req.body;
@@ -10,7 +11,7 @@ const fillForm = (req, res, next) => {
     const fieldsObj = params.content;
     
     fieldFiller(fieldsObj, pdfFile, filename, (result) => {
-        res.send(result);
+        res.send(serverName + "/" + params.filename + "_filled.pdf");
         next();
     });
 
@@ -19,8 +20,8 @@ const fillForm = (req, res, next) => {
 const fieldFiller = (fieldsObj, fullPath, filename, callback) => {
     let pdf = pdfFillForm.writeSync(fullPath + '.pdf', fieldsObj, { 'save': 'pdf' });
     fs.writeFileSync(filename + '_filled.pdf', pdf);
-    console.info(fieldsObj);
-    console.info(filename);
+   // console.info(fieldsObj);
+   // console.info(filename);
     callback(filename+"_filled.pdf");
 }
 
@@ -53,7 +54,30 @@ server.use(restify.bodyParser());
 server.get('/pdf/:filename/fields', getFields);
 server.get('/pdf/:filename', getFile);
 server.post('/pdf/fields', fillForm);
+server.get( /._filled.pdf/, function(req, res, next) {
+// console.log(req);
+  fs.readFile( process.env.PWD+ '/resources/pdfs' + req.url, 'utf8', function(err, file) {
+// console.log(err);
+// console.log(file);
+    if (err) {
+      res.send(500);
+      return next();
+    }
+    res.writeHead(200, {
+  'Content-Length': Buffer.byteLength(file),
+  'Content-Type': 'application/pdf'
+});
 
+//    res.send({
+//      code: 200,
+//      noEnd: true
+//    });
+
+    res.write(file);
+    res.end();
+    return next();
+  });
+});
 server.listen(8080, function () {
     console.log('%s listening at %s', server.name, server.url);
 });
