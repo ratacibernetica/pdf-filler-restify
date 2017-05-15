@@ -73,6 +73,22 @@ Where:
 
 ![](http://res.cloudinary.com/ratacibernetica/image/upload/v1493087370/Screen_Shot_2017-04-24_at_10.28.31_PM_xgzgut.png)
 
+## Changing the app settings.
+
+If you want to set another path for PDFs or change the name of the server, simply change those in the `src/loader/pdf-loader.js` file:
+
+```
+const path = process.env.PWD + '/resources/pdfs/';
+const serverName = "http://182.72.238.124:8080";
+```
+
+**path** shoud be an absolute path in the system the app is running.
+**serverName** it will be in the response of the generated file, so you can download it.
+
+## Running as daemon
+
+Just run with `npm start &` and it will be running in the background.
+
 ## Requirements
 
 This utility requires `libcairo2-dev libpoppler-qt5-dev curl` and node > v4.5 to work.
