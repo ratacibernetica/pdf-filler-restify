@@ -1,2 +1,4 @@
 node_modules
-dockerized
+Dockerfile
+.git*
+.dockerignore

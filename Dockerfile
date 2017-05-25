@@ -13,7 +13,7 @@ WORKDIR /app
 COPY . /app
 
 RUN npm i
-
+RUN . /app/.env
 CMD ["npm", "start"]
  
 

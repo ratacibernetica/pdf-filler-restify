@@ -2,7 +2,7 @@ var restify = require('restify');
 var pdfFillForm = require('pdf-fill-form');
 var fs = require('fs');
 const path = process.env.PWD + '/resources/pdfs/';
-const serverName = "http://182.72.238.124:8080";
+const serverName = process.env.APP_URL + ":" + process.env.APP_PORT;
 
 const fillForm = (req, res, next) => {
     const params = req.body;
@@ -20,8 +20,7 @@ const fillForm = (req, res, next) => {
 const fieldFiller = (fieldsObj, fullPath, filename, callback) => {
     let pdf = pdfFillForm.writeSync(fullPath + '.pdf', fieldsObj, { 'save': 'pdf' });
     fs.writeFileSync(filename + '_filled.pdf', pdf);
-   // console.info(fieldsObj);
-   // console.info(filename);
+
     callback(filename+"_filled.pdf");
 }
 
@@ -61,6 +60,6 @@ server.get( /._filled.pdf/, function(req, res, next) {
 // console.log(err);
 // console.log(file);
 });
-server.listen(8080, function () {
+server.listen(process.env.APP_PORT, function () {
     console.log('%s listening at %s', server.name, server.url);
 });
